@@ -6,6 +6,13 @@
 <h3 class="card-title">Car Customers</h3>
 <br />
 
+<a href="/Customers/create/" class="btn btn-secondary">
+	<span class="oi oi-plus"></span>
+	Create New Customer
+</a>
+<br />
+<br />
+
 @if (Customers == null)
 {
 	<div class="alert alert-info">Loading Customers...</div>
@@ -58,7 +65,7 @@ else
 		if (Customers != null)
 		{
 			var Customer = Customers.First(q => q.Id == CustomerId);
-			var confirm = await js.InvokeAsync<bool>("Confirm", $"Do you want to delete {Customer.DrivingLicense}?");
+			var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Customer.DrivingLicense}?");
 			if (confirm)
 			{
 				await _client.DeleteAsync($"{Endpoints.CustomersEndpoint}/{CustomerId}");

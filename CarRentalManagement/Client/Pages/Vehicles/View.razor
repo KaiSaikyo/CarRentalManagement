@@ -1,0 +1,29 @@
+﻿@page "/vehicles/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>View Vehicle</h3>
+
+<FormComponent vehicle="vehicle" Disabled="true" />
+
+@code {
+	[Parameter] public int id { get; set; }
+	Vehicle? vehicle = new Vehicle();
+
+	private IList<Make>? Makes;
+	private IList<Model>? Models;
+	private IList<Colour>? Colours;
+
+	protected async override Task OnInitializedAsync()
+	{
+		Makes = await _client.GetFromJsonAsync<List<Make>>($"{Endpoints.MakesEndpoint}");
+		Models = await _client.GetFromJsonAsync<List<Model>>($"{Endpoints.ModelsEndpoint}");
+		Colours = await _client.GetFromJsonAsync<List<Colour>>($"{Endpoints.ColoursEndpoint}");
+	}
+
+	protected async override Task OnParametersSetAsync()
+	{
+		vehicle = await
+		_client.GetFromJsonAsync<Vehicle>($"{Endpoints.VehiclesEndpoint}/{id}");
+	}
+}

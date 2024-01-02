@@ -91,7 +91,12 @@ namespace CarRentalManagement.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMake(int id)
         {
-            var make = await _unitOfWork.Makes.Get(q => q.Id == id);
+			if (_unitOfWork.Makes == null)
+			{
+				return NotFound();
+			}
+
+			var make = await _unitOfWork.Makes.Get(q => q.Id == id);
 
             if (make == null)
             {
