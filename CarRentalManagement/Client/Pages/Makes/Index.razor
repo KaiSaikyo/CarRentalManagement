@@ -6,6 +6,13 @@
 <h3 class = "card-title">Car Makes</h3>
 <br/>
 
+<a href="/makes/create/" class="btn btn-secondary">
+	<span class="oi oi-plus"></span>
+	Create New Make
+</a>
+<br />
+<br />
+
 @if (Makes == null) {
 	<div class="alert alert-info">Loading Makes...</div>
 }
@@ -52,7 +59,7 @@ else {
 		if (Makes != null)
 		{
 			var make = Makes.First(q => q.Id == makeId);
-			var confirm = await js.InvokeAsync<bool>("Confirm", $"Do you want to delete {make.Name}?");
+			var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {make.Name}?");
 			if (confirm)
 			{
 				await _client.DeleteAsync($"{Endpoints.MakesEndpoint}/{makeId}");

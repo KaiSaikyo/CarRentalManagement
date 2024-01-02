@@ -6,6 +6,13 @@
 <h3 class="card-title">Car Colours</h3>
 <br />
 
+<a href="/colours/create/" class="btn btn-secondary">
+	<span class="oi oi-plus"></span>
+	Create New Colour
+</a>
+<br />
+<br />
+
 @if (Colours == null)
 {
 	<div class="alert alert-info">Loading Colours...</div>
@@ -54,7 +61,7 @@ else
 		if (Colours != null)
 		{
 			var Colour = Colours.First(q => q.Id == ColourId);
-			var confirm = await js.InvokeAsync<bool>("Confirm", $"Do you want to delete {Colour.Name}?");
+			var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Colour.Name}?");
 			if (confirm)
 			{
 				await _client.DeleteAsync($"{Endpoints.ColoursEndpoint}/{ColourId}");
